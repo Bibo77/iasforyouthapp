@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+
+<div data-role="page" id="mainPage">
+  <div data-role="header">
+    <h1>IAS App</h1>
+  </div>
+
+  <div data-role="content">
+    <p>Welcome to the Islamic Association of Saskatchewan mobile application.</p>
+    <a href="#prayerPage" data-transition="slide">Prayer Timings</a><br><br>
+    <a href="#EventsPage" data-transition="slide">Upcoming IAS Events</a><br><br>
+    <a href="#youthEventsPage" data-transition="slide">Upcoming IAS Youth events</a>
+  </div>
+
+  <div data-role="footer">
+    <h1>Brought to you by IAS Youth</h1>
+  </div>
+</div> 
+
+<div data-role="page" id="prayerPage">
+  <div data-role="header">
+    <h1>Prayer Timings</h1>
+  </div>
+
+  <div data-role="content">
+      <div data-role="collapsible" data-collapsed="false">
+        <h1>East-side Masjid</h1>
+        <label>Fajr: </label><label id="fajr"></label><br>
+        <label>Duhr: </label><label id="duhr"></label><br>
+        <label>Asr: </label><label id="asr"></label><br>
+        <label>Maghrib: </label><label id="maghrib"></label><br>
+        <label>Isha: </label><label id="isha"></label><br>
+      </div>
+    
+    <a href="#mainPage" data-transition="slide">Main Page</a>
+  </div>
+
+  <div data-role="footer">
+    <h1></h1>
+  </div>
+</div> 
+    
+<div data-role="page" id="youthEventsPage">
+  <div data-role="header">
+    <h1>Events</h1>
+   
+  </div>
+
+  <div data-role="content">
+      <button id="refresh">Refresh Events</button><br>
+      <div data-role="collapsible" data-collapsed="false">
+        <h1>East-side Masjid</h1>
+          
+        <div  data-role="collapsible" data-collapsed="false">
+            <h1>Brother Events</h1>
+            <div id="B"></div>
+        
+        </div>
+        <div  data-role="collapsible" data-collapsed="false">
+            <h1>Sister Events</h1>
+            <div id="S"></div>
+        </div>
+      </div>
+    
+    <a href="#mainPage" data-transition="slide">Main Page</a>
+  </div>
+
+  <div data-role="footer">
+    <h1></h1>
+  </div>
+</div> 
+
+</body>
+</html>
+
+<script>
+    $('#refresh').click(function() {
+       $.getJSON( "http://iasforyouth.appspot.com/loadEvents?callback=?", function( json ) {
+           $("#B").empty(); 
+           $("#S").empty(); 
+           json.forEach(function(event) {
+               var showingDate = event.DateTime.slice(0,9).split("-");
+               var showingTime = event.DateTime.slice(11,16); 
+               
+               var year = showingDate[0]; 
+               var month = getMonth(showingDate[1]); 
+               var day = showingDate[2];
+               
+               var finalDateTime = month + ", " + day + ", " + year + ". At " + tConvert(showingTime); 
+               
+               if(event.Gender == "Brother's Event"){
+                   $("#B").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
+                            "<li><label>"+finalDateTime+"</label></li>" +
+                            "<li><label>"+event.Location+"</label></li>" +
+                            "<li><label>"+event.Description+"</label></li>" +
+                        "</ul></fieldset>"); 
+               }else {
+                   $("#S").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
+                            "<li><label>Date and Time: "+finalDateTime+"</label></li>" +
+                            "<li><label>Location: "+event.Location+"</label></li>" +
+                            "<li><label>Description: "+event.Description+"</label></li>" +
+                            "<li><label>Event Type: "+event.Gender+"</label></li>" +
+                        "</ul></fieldset>"); 
+               }
+           });
+       }); 
+    }); 
+    
+    
+    
+    
+    
+    
+    
+    function getMonth(num){
+        var monthNames = [ "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December" ];
+        num = parseInt(num); 
+        
+        return monthNames[num]; 
+    }
+    
+    function tConvert (time) {
+        // Check correct time format and split into components
+        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+        if (time.length > 1) { // If time format correct
+            time = time.slice (1);  // Remove full string match value
+            time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+            time[0] = +time[0] % 12 || 12; // Adjust hours
+        }
+        
+        return time.join (''); // return adjusted time or original string
+    }
+    
+</script>
