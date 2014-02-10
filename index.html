@@ -12,30 +12,29 @@
 <body>
 
 <div data-role="page" id="mainPage">
-  <div data-role="header">
+  <div data-role="header" data-position="fixed" >
     <h1>IAS App</h1>
   </div>
-
+    
   <div data-role="content">
-    <p>Welcome to the Islamic Association of Saskatchewan mobile application.</p>
-    <a href="#prayerPage" data-transition="slide">Prayer Timings</a><br><br> 
-    <a href="#youthEventsPage" data-transition="slide">Upcoming IAS Youth events</a>
+    <p>Welcome to the Islamic Association of Saskatchewan mobile application.</p><br>
+    <a data-role="button" href="#prayerPage" data-transition="slide">Prayer Timings</a>
+    <a data-role="button" href="#EventsPage" data-transition="slide">Upcoming IAS Youth events</a>
   </div>
 
-  <div data-role="footer">
+  <div data-role="footer" data-position="fixed" >
     <h1>Brought to you by IAS Youth</h1>
   </div>
 </div> 
 
 <div data-role="page" id="prayerPage">
-  <div  data-role="header">
-      <a href="#mainPage" data-transition="slide">Back</a>
-      <h1>Prayer Timings</h1>
+  <div  data-role="header" data-position="fixed" >
+      <a data-role="button" href="#mainPage" data-transition="slide" data-direction="reverse" data-icon="home">Home</a>
+      <h1>Congregation Prayer Timings</h1>
   </div>
-  
+   
   <div data-role="content" id="yql">
-    <p>The following are the times for prayer, at the following mosque's.</p>
-    <p>“ Prayer in congregation is superior to prayer alone by twenty seven degrees.” [Bukhari & Muslim]</p>
+    <label>“Prayer in congregation is superior to prayer alone by twenty seven degrees.” [Bukhari & Muslim]</label>
       
     <div data-role="collapsible-set">
       <div data-role="collapsible" data-collapsed="true">
@@ -63,21 +62,18 @@
    
   </div>
 
-  <div data-role="footer">
+  <div data-role="footer" data-position="fixed" >
     <h1></h1>
   </div>
 </div> 
     
-<div data-role="page" id="youthEventsPage">
-  <div data-role="header">
-    <a href="#mainPage" data-transition="slide">Back</a>
+<div data-role="page" id="EventsPage">
+  <div data-role="header" data-position="fixed" >
+    <a data-role="button" href="#mainPage" data-transition="slide" data-direction="reverse" data-icon="home">Home</a>
       <h1>Events</h1>
-   
   </div>
 
   <div data-role="content">
-      
-      
       <div data-role="collapsible" data-collapsed="true">
           <h1 id="eastEvents">East-side Masjid</h1>
           
@@ -96,7 +92,7 @@
       </div>
   </div>
 
-  <div data-role="footer">
+  <div data-role="footer" data-position="fixed" >
     <h1> </h1>  
   </div>
 </div> 
@@ -209,9 +205,7 @@
     });
    
     
-    
-    
-    
+
     
     
     
