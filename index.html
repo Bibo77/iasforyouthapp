@@ -5,6 +5,9 @@
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="Description" content="" />
+    <meta name="Keywords"  content="" />
 </head>
 <body>
 
@@ -15,8 +18,7 @@
 
   <div data-role="content">
     <p>Welcome to the Islamic Association of Saskatchewan mobile application.</p>
-    <a href="#prayerPage" data-transition="slide">Prayer Timings</a><br><br>
-    <a href="#EventsPage" data-transition="slide">Upcoming IAS Events</a><br><br>
+    <a href="#prayerPage" data-transition="slide">Prayer Timings</a><br><br> 
     <a href="#youthEventsPage" data-transition="slide">Upcoming IAS Youth events</a>
   </div>
 
@@ -26,21 +28,39 @@
 </div> 
 
 <div data-role="page" id="prayerPage">
-  <div data-role="header">
-    <h1>Prayer Timings</h1>
+  <div  data-role="header">
+      <a href="#mainPage" data-transition="slide">Back</a>
+      <h1>Prayer Timings</h1>
   </div>
-
-  <div data-role="content">
-      <div data-role="collapsible" data-collapsed="false">
-        <h1>East-side Masjid</h1>
-        <label>Fajr: </label><label id="fajr"></label><br>
+  
+  <div data-role="content" id="yql">
+    <p>The following are the times for prayer, at the following mosque's.</p>
+    <p>“ Prayer in congregation is superior to prayer alone by twenty seven degrees.” [Bukhari & Muslim]</p>
+      
+    <div data-role="collapsible-set">
+      <div data-role="collapsible" data-collapsed="true">
+        <h1 id="eastPrayers" >East-side Masjid</h1>
+        <label><b>Fajr: </b></label><label id="fajr"></label><br>
         <label>Duhr: </label><label id="duhr"></label><br>
         <label>Asr: </label><label id="asr"></label><br>
         <label>Maghrib: </label><label id="maghrib"></label><br>
-        <label>Isha: </label><label id="isha"></label><br>
+        <label><b>Isha: </b></label><label id="isha"></label><br><br>
+        <label>Jumma 1: </label><label id="jumma1"></label><br>
+        <label>Jumma 2: </label><label id="jumma2"></label><br>
       </div>
-    
-    <a href="#mainPage" data-transition="slide">Main Page</a>
+      
+      <div data-role="collapsible" data-collapsed="true">
+        <h1 id="westPrayers" >West-side Masjid</h1>
+        <label><b>Fajr: </b></label><label id="fajrWest"></label><br>
+        <label>Duhr: </label><label id="duhrWest"></label><br>
+        <label>Asr: </label><label id="asrWest"></label><br>
+        <label>Maghrib: </label><label id="maghribWest"></label><br>
+        <label><b>Isha: </b></label><label id="ishaWest"></label><br><br>
+        <label>Jumma 1: </label><label id="jumma1West"></label><br>
+        <label>Jumma 2: </label><label id="jumma2West"></label><br>
+      </div>
+    </div>
+   
   </div>
 
   <div data-role="footer">
@@ -50,39 +70,112 @@
     
 <div data-role="page" id="youthEventsPage">
   <div data-role="header">
-    <h1>Events</h1>
+    <a href="#mainPage" data-transition="slide">Back</a>
+      <h1>Events</h1>
    
   </div>
 
   <div data-role="content">
-      <button id="refresh">Refresh Events</button><br>
-      <div data-role="collapsible" data-collapsed="false">
-        <h1>East-side Masjid</h1>
+      
+      
+      <div data-role="collapsible" data-collapsed="true">
+          <h1 id="eastEvents">East-side Masjid</h1>
           
-        <div  data-role="collapsible" data-collapsed="false">
-            <h1>Brother Events</h1>
-            <div id="B"></div>
-        
-        </div>
-        <div  data-role="collapsible" data-collapsed="false">
-            <h1>Sister Events</h1>
-            <div id="S"></div>
-        </div>
+          <div data-role="collapsible-set">
+              <div  data-role="collapsible" data-collapsed="false">
+                <h1>Brother Events</h1>
+                <div id="B"></div>
+              </div>
+              
+              <div  data-role="collapsible" data-collapsed="true">
+                <h1>Sister Events</h1>
+                <div id="S"></div>
+              </div>
+          </div>
+      
       </div>
-    
-    <a href="#mainPage" data-transition="slide">Main Page</a>
   </div>
 
   <div data-role="footer">
-    <h1></h1>
+    <h1> </h1>  
   </div>
 </div> 
 
 </body>
 </html>
 
+<script type="text/javascript" src="http://jsdo.it/laphroaig/json2/js"></script>
+<script type="text/javascript" src="http://jsdo.it/laphroaig/jquery.yql/js"></script>
+
 <script>
-    $('#refresh').click(function() {
+    $(function(){
+        
+        var fajrEast = "NA";
+        var duhrEast = "NA";
+        var asrEast= "NA"; 
+        var maghribEast = "NA";
+        var ishaEast = "NA"; 
+        var jumma1East = "NA"; 
+        var jumma2East = "NA";
+                    
+                
+        var fajrWest = "NA";
+        var duhrWest = "NA";
+        var asrWest = "NA";
+        var maghribWest = "NA";
+        var ishaWest = "NA";
+        var jumma1West = "NA";
+        var jumma2West = "NA";
+        
+        var $yql = $("#yql");
+        $.yql.getHTML('http://www.imamilyas.com/index.html', {
+                xpath: '//div',
+                format: 'json',
+                callback: function(data){
+                    
+                    fajrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[0].td[1].p;
+                    duhrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[1].td[1].p;
+                    asrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[2].td[1].p;
+                    maghribEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[3].td[1].p;
+                    ishaEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[4].td[1].p;
+                    jumma1East = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[5].td[1].p;
+                    jumma2East = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[6].td[1].p;
+                    
+                    
+                    fajrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[0].td[1].p;
+                    duhrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[1].td[1].p;
+                    asrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[2].td[1].p;
+                    maghribWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[3].td[1].p;
+                    ishaWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[4].td[1].p;
+                    jumma1West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[5].td[1].p;
+                    jumma2West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[6].td[1].p;
+                }
+        });
+        
+        
+        
+        $('#eastPrayers').click(function() {
+            $('#fajr').text(fajrEast);
+            $('#duhr').text(duhrEast);
+            $('#asr').text(asrEast);
+            $('#maghrib').text(maghribEast);
+            $('#isha').text(ishaEast);
+            $('#jumma1').text(jumma1East);
+            $('#jumma2').text(jumma2East);
+        });
+        
+        $('#westPrayers').click(function() {
+            $('#fajrWest').text(fajrWest);
+            $('#duhrWest').text(duhrWest);
+            $('#asrWest').text(asrWest);
+            $('#maghribWest').text(maghribWest);
+            $('#ishaWest').text(ishaWest);
+            $('#jumma1West').text(jumma1West);
+            $('#jumma2West').text(jumma2West);
+        });
+        
+        
+        $('#eastEvents').click(function() {
        $.getJSON( "http://iasforyouth.appspot.com/loadEvents?callback=?", function( json ) {
            $("#B").empty(); 
            $("#S").empty(); 
@@ -113,6 +206,8 @@
            });
        }); 
     }); 
+    });
+   
     
     
     
