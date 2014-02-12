@@ -118,7 +118,107 @@ Email Us</a>
 <script type="text/javascript" src="http://jsdo.it/laphroaig/jquery.yql/js"></script>
 
 <script>
-    
+    $(function(){
+        
+        var fajrEast = "NA";
+        var duhrEast = "NA";
+        var asrEast= "NA"; 
+        var maghribEast = "NA";
+        var ishaEast = "NA"; 
+        var jumma1East = "NA"; 
+        var jumma2East = "NA";
+                    
+                
+        var fajrWest = "NA";
+        var duhrWest = "NA";
+        var asrWest = "NA";
+        var maghribWest = "NA";
+        var ishaWest = "NA";
+        var jumma1West = "NA";
+        var jumma2West = "NA";
+        
+        var $yql = $("#yql");
+        $.yql.getHTML('http://www.imamilyas.com/index.html', {
+                xpath: '//div',
+                format: 'json',
+                callback: function(data){
+                    
+                    fajrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[0].td[1].p;
+                    duhrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[1].td[1].p;
+                    asrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[2].td[1].p;
+                    maghribEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[3].td[1].p;
+                    ishaEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[4].td[1].p;
+                    jumma1East = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[5].td[1].p;
+                    jumma2East = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[6].td[1].p;
+                    
+                    
+                    fajrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[0].td[1].p;
+                    duhrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[1].td[1].p;
+                    asrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[2].td[1].p;
+                    maghribWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[3].td[1].p;
+                    ishaWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[4].td[1].p;
+                    jumma1West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[5].td[1].p;
+                    jumma2West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[6].td[1].p;
+                }
+        });
+        
+        
+        
+        $('#eastPrayers').click(function() {
+            $('#fajr').html("<b>"+fajrEast +"</b>");
+            $('#duhr').html(duhrEast);
+            $('#asr').html(asrEast);
+            $('#maghrib').html(maghribEast);
+            $('#isha').html("<b>"+ishaEast+"</b>");
+            $('#jumma1').html(jumma1East);
+            $('#jumma2').html(jumma2East);
+        });
+        
+        $('#westPrayers').click(function() {
+            $('#fajrWest').html("<b>"+fajrWest+"</b>");
+            $('#duhrWest').html(duhrWest);
+            $('#asrWest').html(asrWest);
+            $('#maghribWest').html(maghribWest);
+            $('#ishaWest').html("<b>"+ishaWest+"</b>");
+            $('#jumma1West').html(jumma1West);
+            $('#jumma2West').html(jumma2West);
+        });
+        
+        var bCount = 0;
+        var sCount = 0;
+         $.getJSON( "http://iasforyouth.appspot.com/loadEvents?callback=?", function( json ) {
+           $("#B").empty(); 
+           $("#S").empty(); 
+           json.forEach(function(event) {
+               var showingDate = event.DateTime.slice(0,9).split("-");
+               var showingTime = event.DateTime.slice(11,16); 
+               
+               var year = showingDate[0]; 
+               var month = getMonth(showingDate[1]); 
+               var day = showingDate[2];
+               
+               var finalDateTime = month + ", " + day + ", " + year + ". At " + tConvert(showingTime); 
+               
+               if(event.Gender == "Brother's Event"){
+                   bCount ++;
+                   $("#B").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
+                            "<li><label>"+finalDateTime+"</label></li>" +
+                            "<li><label>"+event.Location+"</label></li>" +
+                            "<li><label>"+event.Description+"</label></li>" +
+                        "</ul></fieldset>"); 
+               }else {
+                   sCount ++; 
+                   $("#S").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
+                            "<li><label>"+finalDateTime+"</label></li>" +
+                            "<li><label>"+event.Location+"</label></li>" +
+                            "<li><label>"+event.Description+"</label></li>" +
+                        "</ul></fieldset>"); 
+               }
+           });
+             $("#bNum").html(bCount); 
+             $("#sNum").html(sCount); 
+       }); 
+    });
    
     
 
