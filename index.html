@@ -11,23 +11,37 @@
 </head>
 <body>
 
-<div data-role="page" id="mainPage" data-theme="a">
+<div data-role="page" id="mainPage" data-theme="b">
   <div data-role="header" data-position="fixed" >
-    <h1>IAS App</h1>
+    <h1></h1>
+      <a href="#contact" data-rel="dialog" data-role="button" class="ui-btn-right">Contact Us</a>
   </div>
     
   <div data-role="content">
-    <p>Welcome to the Islamic Association of Saskatchewan mobile application.</p><br>
-    <a data-role="button" href="#prayerPage" data-transition="slide">Prayer Timings</a>
-    <a data-role="button" href="#EventsPage" data-transition="slide">Upcoming IAS Youth events</a>
+      <p></p>
+    <a data-role="button" href="#prayerPage" data-transition="slide" >Prayer Timings</a>
+    <a data-role="button" href="#EventsPage" data-transition="slide" >Upcoming IAS Youth Events</a>
   </div>
 
   <div data-role="footer" data-position="fixed" >
-    <h1>Brought to you by IAS Youth</h1>
+    <h1>Brought to you by: IAS Youth</h1>
   </div>
 </div> 
 
-<div data-role="page" id="prayerPage" data-theme="a">
+<div data-role="page" id="contact" data-theme="b">
+  <div data-role="header">
+    <h1>Contact Us</h1>
+  </div>
+
+  <div data-role="content">
+    <p>Assalamu Alaykum, this is the Islamic Association of Saskatchewan, mobile application. Please feel free to contact us if you have any suggestions for improvement.</p>
+      <a data-icon="info" data-inline="true" data-role="button" href="mailto:noreply@youtube.com?Subject=IAS%20App" target="_top">
+Email Us</a>
+  </div>
+
+</div> 
+    
+<div data-role="page" id="prayerPage" data-theme="b">
   <div  data-role="header" data-position="fixed" >
       <a data-role="button" href="#" data-transition="slide" data-rel="back" data-icon="back">Back</a>
       <h1>Prayer Timings</h1>
@@ -35,7 +49,7 @@
    
   <div data-role="content" id="yql">
     <label>“Prayer in congregation is superior to prayer alone by twenty seven degrees.” [Bukhari & Muslim]</label>
-      
+      <br>
     <div data-role="collapsible-set">
       <div data-role="collapsible" data-collapsed="true">
         <h1 id="eastPrayers" >East-side Masjid</h1>
@@ -67,7 +81,7 @@
   </div>
 </div> 
     
-<div data-role="page" id="EventsPage" data-theme="a">
+<div data-role="page" id="EventsPage" data-theme="b">
   <div data-role="header" data-position="fixed" >
     <a data-role="button" href="#" data-transition="slide" data-rel="back" data-icon="back">Back</a>
       <h1>Events</h1>
@@ -78,13 +92,13 @@
           <h1 id="eastEvents">East-side Masjid</h1>
           
           <div data-role="collapsible-set">
-              <div  data-role="collapsible" data-collapsed="false">
-                <h1>Brother Events</h1>
+              <div  data-role="collapsible" data-collapsed="false" >
+                <h1>Brother Events<span id="bNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
                 <div id="B"></div>
               </div>
               
               <div  data-role="collapsible" data-collapsed="true">
-                <h1>Sister Events</h1>
+                <h1>Sister Events <span id="sNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
                 <div id="S"></div>
               </div>
           </div>
@@ -104,103 +118,7 @@
 <script type="text/javascript" src="http://jsdo.it/laphroaig/jquery.yql/js"></script>
 
 <script>
-    $(function(){
-        
-        var fajrEast = "NA";
-        var duhrEast = "NA";
-        var asrEast= "NA"; 
-        var maghribEast = "NA";
-        var ishaEast = "NA"; 
-        var jumma1East = "NA"; 
-        var jumma2East = "NA";
-                    
-                
-        var fajrWest = "NA";
-        var duhrWest = "NA";
-        var asrWest = "NA";
-        var maghribWest = "NA";
-        var ishaWest = "NA";
-        var jumma1West = "NA";
-        var jumma2West = "NA";
-        
-        var $yql = $("#yql");
-        $.yql.getHTML('http://www.imamilyas.com/index.html', {
-                xpath: '//div',
-                format: 'json',
-                callback: function(data){
-                    
-                    fajrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[0].td[1].p;
-                    duhrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[1].td[1].p;
-                    asrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[2].td[1].p;
-                    maghribEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[3].td[1].p;
-                    ishaEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[4].td[1].p;
-                    jumma1East = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[5].td[1].p;
-                    jumma2East = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[6].td[1].p;
-                    
-                    
-                    fajrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[0].td[1].p;
-                    duhrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[1].td[1].p;
-                    asrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[2].td[1].p;
-                    maghribWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[3].td[1].p;
-                    ishaWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[4].td[1].p;
-                    jumma1West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[5].td[1].p;
-                    jumma2West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[6].td[1].p;
-                }
-        });
-        
-        
-        
-        $('#eastPrayers').click(function() {
-            $('#fajr').html("<b>"+fajrEast +"</b>");
-            $('#duhr').html(duhrEast);
-            $('#asr').html(asrEast);
-            $('#maghrib').html(maghribEast);
-            $('#isha').html("<b>"+ishaEast+"</b>");
-            $('#jumma1').html(jumma1East);
-            $('#jumma2').html(jumma2East);
-        });
-        
-        $('#westPrayers').click(function() {
-            $('#fajrWest').html("<b>"+fajrWest+"</b>");
-            $('#duhrWest').html(duhrWest);
-            $('#asrWest').html(asrWest);
-            $('#maghribWest').html(maghribWest);
-            $('#ishaWest').html("<b>"+ishaWest+"</b>");
-            $('#jumma1West').html(jumma1West);
-            $('#jumma2West').html(jumma2West);
-        });
-        
-        
-         $.getJSON( "http://iasforyouth.appspot.com/loadEvents?callback=?", function( json ) {
-           $("#B").empty(); 
-           $("#S").empty(); 
-           json.forEach(function(event) {
-               var showingDate = event.DateTime.slice(0,9).split("-");
-               var showingTime = event.DateTime.slice(11,16); 
-               
-               var year = showingDate[0]; 
-               var month = getMonth(showingDate[1]); 
-               var day = showingDate[2];
-               
-               var finalDateTime = month + ", " + day + ", " + year + ". At " + tConvert(showingTime); 
-               
-               if(event.Gender == "Brother's Event"){
-                   $("#B").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
-                            "<li><label>"+finalDateTime+"</label></li>" +
-                            "<li><label>"+event.Location+"</label></li>" +
-                            "<li><label>"+event.Description+"</label></li>" +
-                        "</ul></fieldset>"); 
-               }else {
-                   $("#S").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
-                            "<li><label>Date and Time: "+finalDateTime+"</label></li>" +
-                            "<li><label>Location: "+event.Location+"</label></li>" +
-                            "<li><label>Description: "+event.Description+"</label></li>" +
-                            "<li><label>Event Type: "+event.Gender+"</label></li>" +
-                        "</ul></fieldset>"); 
-               }
-           });
-       }); 
-    });
+    
    
     
 
