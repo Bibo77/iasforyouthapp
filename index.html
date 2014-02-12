@@ -13,18 +13,19 @@
 
 <div data-role="page" id="mainPage" data-theme="b">
   <div data-role="header" data-position="fixed" >
-    <h1></h1>
+    <h1>IAS Youth</h1>
       <a href="#contact" data-rel="dialog" data-role="button" class="ui-btn-right">Contact Us</a>
   </div>
     
   <div data-role="content">
-      <p></p>
+      <p>"Allah says, 'I am as my servant expects Me to be, and I am with him when he remembers me. If he thinks of Me, I think of him. If he mentions Me in company, I mention him in an even better company. When he comes closer to Me by a handspan, I come closer to him an arm's length. If he draws closer to Me by an arm's length, I draw closer by a distance of two outstretched arms nearer to him. If my servant comes to Me walking, I go to him running." (Al-Bukhari)</p>
+      <br>
     <a data-role="button" href="#prayerPage" data-transition="slide" >Prayer Timings</a>
-    <a data-role="button" href="#EventsPage" data-transition="slide" >Upcoming IAS Youth Events</a>
+    <a data-role="button" href="#EventsPage" data-transition="slide" >Upcoming Events</a>
   </div>
 
   <div data-role="footer" data-position="fixed" >
-    <h1>Brought to you by: IAS Youth</h1>
+    <h1> </h1>
   </div>
 </div> 
 
@@ -34,7 +35,7 @@
   </div>
 
   <div data-role="content">
-    <p>Assalamu Alaykum, this is the Islamic Association of Saskatchewan (Youth), mobile application. Please feel free to contact us if you have any suggestions for improvement.</p>
+    <p>Assalamu Alaykum, this is the Islamic Association of Saskatchewan (Youth), mobile application. Please feel free to contact us if you have any suggestions for improvement, or general questions.</p>
       <a data-icon="info" data-inline="true" data-role="button" href="mailto:iasyouthm@gmail.com?Subject=IAS%20App" target="_top">
 Email Us</a>
   </div>
@@ -45,6 +46,7 @@ Email Us</a>
   <div  data-role="header" data-position="fixed" >
       <a data-role="button" href="#" data-transition="slide" data-rel="back" data-icon="back">Back</a>
       <h1>Prayer Timings</h1>
+      <a class="refresh" href="#" data-role="button" data-icon="refresh" data-iconpos="notext"></a>
   </div>
    
   <div data-role="content" id="yql">
@@ -85,9 +87,12 @@ Email Us</a>
   <div data-role="header" data-position="fixed" >
     <a data-role="button" href="#" data-transition="slide" data-rel="back" data-icon="back">Back</a>
       <h1>Events</h1>
+      <a class="refresh" href="#" data-role="button" data-icon="refresh" data-iconpos="notext"></a>
   </div>
 
   <div data-role="content">
+      <p>"None of you will believe until you love for your brother what you love for yourself." [Bukhari & Muslim]</p>
+      <br>
       <div data-role="collapsible" data-collapsed="true">
           <h1 id="eastEvents">East-side Masjid</h1>
           
@@ -120,6 +125,15 @@ Email Us</a>
 <script>
     $(function(){
         
+        loadData(); 
+        
+        $('.refresh').click(function() {
+           loadData(); 
+         });
+        
+    }); 
+    
+    function loadData(){
         var fajrEast = "NA";
         var duhrEast = "NA";
         var asrEast= "NA"; 
@@ -159,30 +173,31 @@ Email Us</a>
                     ishaWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[4].td[1].p;
                     jumma1West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[5].td[1].p;
                     jumma2West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[6].td[1].p;
+                    
+                    
+                    $('#fajr').html("<b>"+fajrEast +"</b>");
+                    $('#duhr').html(duhrEast);
+                    $('#asr').html(asrEast);
+                    $('#maghrib').html(maghribEast);
+                    $('#isha').html("<b>"+ishaEast+"</b>");
+                    $('#jumma1').html(jumma1East);
+                    $('#jumma2').html(jumma2East);
+            
+                    $('#fajrWest').html("<b>"+fajrWest+"</b>");
+                    $('#duhrWest').html(duhrWest);
+                    $('#asrWest').html(asrWest);
+                    $('#maghribWest').html(maghribWest);
+                    $('#ishaWest').html("<b>"+ishaWest+"</b>");
+                    $('#jumma1West').html(jumma1West);
+                    $('#jumma2West').html(jumma2West);
                 }
         });
         
         
         
-        $('#eastPrayers').click(function() {
-            $('#fajr').html("<b>"+fajrEast +"</b>");
-            $('#duhr').html(duhrEast);
-            $('#asr').html(asrEast);
-            $('#maghrib').html(maghribEast);
-            $('#isha').html("<b>"+ishaEast+"</b>");
-            $('#jumma1').html(jumma1East);
-            $('#jumma2').html(jumma2East);
-        });
         
-        $('#westPrayers').click(function() {
-            $('#fajrWest').html("<b>"+fajrWest+"</b>");
-            $('#duhrWest').html(duhrWest);
-            $('#asrWest').html(asrWest);
-            $('#maghribWest').html(maghribWest);
-            $('#ishaWest').html("<b>"+ishaWest+"</b>");
-            $('#jumma1West').html(jumma1West);
-            $('#jumma2West').html(jumma2West);
-        });
+            
+        
         
         var bCount = 0;
         var sCount = 0;
@@ -218,7 +233,7 @@ Email Us</a>
              $("#bNum").html(bCount); 
              $("#sNum").html(sCount); 
        }); 
-    });
+    }
    
     
 
