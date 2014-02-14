@@ -13,7 +13,7 @@
 
 <div data-role="page" id="mainPage" data-theme="b">
   <div data-role="header" data-position="fixed" >
-    <h1>IAS Youth</h1>
+    <h1>IAS</h1>
   </div>
     
   <div data-role="content">
@@ -93,21 +93,17 @@ Email Us</a>
   <div data-role="content">
       <p>"None of you will believe until you love for your brother what you love for yourself." [Bukhari & Muslim]</p>
       <br>
+      <div data-role="collapsible" data-collapsed="false">
+          <h1>General Events<span id="generalNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
+          <div id="generalEvent"></div>
+      </div>
       <div data-role="collapsible" data-collapsed="true">
-          <h1 id="eastEvents">East-side Masjid</h1>
-          
-          <div data-role="collapsible-set">
-              <div  data-role="collapsible" data-collapsed="false" >
-                <h1>Brother Events<span id="bNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
-                <div id="B"></div>
-              </div>
-              
-              <div  data-role="collapsible" data-collapsed="true">
-                <h1>Sister Events <span id="sNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
-                <div id="S"></div>
-              </div>
-          </div>
-      
+          <h1>Exclusive To Brothers<span id="brotherNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
+         <div id="brotherEvent"></div>
+      </div>
+      <div data-role="collapsible" data-collapsed="true">
+          <h1>Exclusive To Sisters<span id="sisterNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
+         <div id="sisterEvent"></div>
       </div>
   </div>
 
@@ -126,7 +122,6 @@ Email Us</a>
     $(function(){
         
         loadData(); 
-        showAlert(); 
         
         $('.refresh').click(function() {
            loadData(); 
@@ -135,13 +130,7 @@ Email Us</a>
         
     }); 
     
-    function showAlert() {
-        navigator.notification.alert(
-            'You are the winner!',  // message
-            'Game Over',            // title
-            'Done'                  // buttonName
-        );
-    }
+    
     
     function loadData(){
         var fajrEast = "NA";
@@ -211,9 +200,10 @@ Email Us</a>
         
         var bCount = 0;
         var sCount = 0;
+        var gCount = 0;
          $.getJSON( "http://iasforyouth.appspot.com/loadEvents?callback=?", function( json ) {
-           $("#B").empty(); 
-           $("#S").empty(); 
+           $("#brotherEvent").empty(); 
+           $("#sisterEvent").empty(); 
            json.forEach(function(event) {
                var showingDate = event.DateTime.slice(0,9).split("-");
                var showingTime = event.DateTime.slice(11,16); 
@@ -226,22 +216,30 @@ Email Us</a>
                
                if(event.Gender == "Brother's Event"){
                    bCount ++;
-                   $("#B").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
+                   $("#brotherEvent").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
                             "<li><label>"+finalDateTime+"</label></li>" +
                             "<li><label>"+event.Location+"</label></li>" +
                             "<li><label>"+event.Description+"</label></li>" +
                         "</ul></fieldset>"); 
-               }else {
+               }else if(event.Gender == "Sister's Event"){
                    sCount ++; 
-                   $("#S").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
+                   $("#sisterEvent").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
                             "<li><label>"+finalDateTime+"</label></li>" +
                             "<li><label>"+event.Location+"</label></li>" +
                             "<li><label>"+event.Description+"</label></li>" +
                         "</ul></fieldset>"); 
-               }
+               } else {
+                   gCount ++; 
+                   $("#generalEvent").append("<fieldset><legend>"+event.Title+"</legend><ul>" +
+                            "<li><label>"+finalDateTime+"</label></li>" +
+                            "<li><label>"+event.Location+"</label></li>" +
+                            "<li><label>"+event.Description+"</label></li>" +
+                        "</ul></fieldset>"); 
+            }
            });
-             $("#bNum").html(bCount); 
-             $("#sNum").html(sCount); 
+             $("#brotherNum").html(bCount); 
+             $("#sisterNum").html(sCount); 
+             $("#generalNum").html(gCount); 
        }); 
     }
    
