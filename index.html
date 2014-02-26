@@ -32,9 +32,26 @@
   </div> 
     
   <div data-role="content"> 
-      <div id="fb-root"></div>
+     <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '{1472493829633399}',
+          status     : true,
+          xfbml      : true
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_UK/all.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
     
-    <div class="fb-comments" data-href="http://iasforyouth.appspot.com/" data-numposts="5" data-colorscheme="light"></div>
+    
       <p>"Allah says, 'I am as my servant expects Me to be, and I am with him when he remembers me. If he thinks of Me, I think of him. If he mentions Me in company, I mention him in an even better company. When he comes closer to Me by a handspan, I come closer to him an arm's length. If he draws closer to Me by an arm's length, I draw closer by a distance of two outstretched arms nearer to him. If my servant comes to Me walking, I go to him running." (Al-Bukhari)</p>
       <br>
       <a data-role="button" href="#prayerPage" data-transition="slide" >Prayer Timings</a>
@@ -117,6 +134,11 @@
 </div> 
     
 <div data-role="page" id="EventsPage" data-theme="b">
+    <div data-role="panel" id="comments" data-display="overlay"> 
+        <h1>Event Comments</h1>
+        <div class="fb-comments" data-mobile="true" data-href="http://iasforyouth.appspot.com/" data-numposts="5" data-colorscheme="dark"></div>
+    </div>
+    
   <div data-role="header" data-position="fixed" >
     <a data-role="button" href="#" data-transition="slide" data-rel="back" data-icon="back">Back</a>
       <h1>Events</h1>
@@ -125,9 +147,8 @@
 
   <div data-role="content">
       <p>"None of you will believe until you love for your brother what you love for yourself." [Bukhari & Muslim]</p>
-      <br>
-      
-      <br>
+      <a href="#comments" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Comment on Events</a>
+      <br><br>
       <div data-role="collapsible" data-collapsed="false">
           <h1>General Events<span id="generalNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
           <div id="generalEvent"></div>
@@ -156,14 +177,7 @@
 
 <script>
     $(document).ready(function(){
-         $.ajaxSetup({ cache: true });
-  $.getScript('//connect.facebook.net/en_UK/all.js', function(){
-    FB.init({
-      appId: '1472493829633399',
-    });     
-    $('#loginbutton,#feedbutton').removeAttr('disabled');
-    FB.getLoginStatus(updateStatusCallback);
-  });
+        
         loadData(); 
         
         $('.refresh').click(function() {
