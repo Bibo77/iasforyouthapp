@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +11,32 @@
     <meta name="Keywords"  content="" />
 </head>
 <body>
-
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1472493829633399";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+    
+    
 <div data-role="page" id="mainPage" data-theme="b">
+    <div data-role="panel" id="contact" data-display="overlay"> 
+    <h1>Contact Us</h1>
+  
+  
+    <p>Assalamu Alaykum, this is the Islamic Association of Saskatchewan mobile application. Please feel free to contact us (IAS Youth) if you have any suggestions for improvement, or general questions.</p>
+      
+      <a data-icon="info" data-inline="true" data-role="button" href="mailto:iasyouthm@gmail.com?Subject=IAS%20App" target="_top">Email Us</a>
+  
+
+    </div>
   <div data-role="header" data-position="fixed" >
-      <a href="#contact" data-rel="dialog" data-role="button" >Contact Us</a>
+      <a href="#contact" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Contact Us</a>
       <h1>IAS</h1>
       <a class="refresh" href="#" data-role="button" data-icon="refresh" data-iconpos="notext"></a>
-  </div>
+  </div> 
     
   <div data-role="content">
       <p>"Allah says, 'I am as my servant expects Me to be, and I am with him when he remembers me. If he thinks of Me, I think of him. If he mentions Me in company, I mention him in an even better company. When he comes closer to Me by a handspan, I come closer to him an arm's length. If he draws closer to Me by an arm's length, I draw closer by a distance of two outstretched arms nearer to him. If my servant comes to Me walking, I go to him running." (Al-Bukhari)</p>
@@ -27,17 +47,13 @@
       <br>
       <a data-role="button" href="#emailPage" data-transition="slide" >Islamic Questions</a>
       <br><br>
-      <h4>Community Announcements</h4>
-      <ol id="announcements">
-        <li>test</li>
-        <li>test</li>
-      </ol>
+      <h4>Latest Community Announcement</h4>
+      <div id="announcements">
+          
+      </div>
   </div>
 
-  <div data-role="footer" data-position="fixed" >
-    <h1> </h1>
-       
-  </div>
+ 
 </div> 
     
 <div data-role="page" id="emailPage" data-theme="b">
@@ -48,33 +64,15 @@
     
   <div data-role="content">
       <p>"And say: My Lord increase me in knowledge." (Qur'an, Ta-Ha 20:114)</p>
-      <form action="http://iasforyouth.appspot.com/email" enctype='multipart/form-data' method="post">
           <p>Have a question in islam, just ask and you will receive a reply by email. In Sha Allah.</p>
-          <input type="email" id="From" name="From" placeholder="Your Email Address" required>
-          <input type="text" id="Subject" name="Subject" placeholder="Subject" required>
-          <textarea id="Body" name="Body" placeholder="Type Your Question Here" required></textarea><br>
-          <input type="submit" value="Send">
-      </form>
+          <a data-icon="info" data-inline="true" data-role="button" href="mailto:imamsask@yahoo.ca?Subject=Question%20From%20IAS%20App" target="_top">Email Imam Alyas</a>
   </div>
 
-  <div data-role="footer" data-position="fixed" >
-    <h1></h1>
-       
-  </div>
+  
 </div> 
 
-<div data-role="page" id="contact" data-theme="b">
-  <div data-role="header">
-    <h1>Contact Us</h1>
-  </div>
-
-  <div data-role="content">
-    <p>Assalamu Alaykum, this is the Islamic Association of Saskatchewan mobile application. Please feel free to contact us (IAS Youth) if you have any suggestions for improvement, or general questions.</p>
-      
-      <a data-icon="info" data-inline="true" data-role="button" href="mailto:iasyouthm@gmail.com?Subject=IAS%20App" target="_top">Email Us</a>
-  </div>
-
-</div> 
+    
+ 
     
 <div data-role="page" id="prayerPage" data-theme="b">
   <div  data-role="header" data-position="fixed" >
@@ -119,9 +117,7 @@
    
   </div>
 
-  <div data-role="footer" data-position="fixed" >
-    <h1></h1>
-  </div>
+  
 </div> 
     
 <div data-role="page" id="EventsPage" data-theme="b">
@@ -133,6 +129,8 @@
 
   <div data-role="content">
       <p>"None of you will believe until you love for your brother what you love for yourself." [Bukhari & Muslim]</p>
+      <br>
+      <div class="fb-comments" data-href="http://iasforyouth.appspot.com/" data-numposts="5" data-colorscheme="light"></div>
       <br>
       <div data-role="collapsible" data-collapsed="false">
           <h1>General Events<span id="generalNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
@@ -151,9 +149,7 @@
       </div>
   </div>
 
-  <div data-role="footer" data-position="fixed" >
-    <h1> </h1>  
-  </div>
+
 </div> 
 
 </body>
@@ -207,6 +203,7 @@
         var asrCampus = "NA"; 
         
         var $yql = $("#yql");
+    
         $.yql.getHTML('http://www.imamilyas.com/index.html', {
                 xpath: '//div',
                 format: 'json',
@@ -253,6 +250,19 @@
                 }
         });
         
+        var latestAnnouncement = "NA";
+        
+        $.yql.getHTML('http://www.islamiccenter.sk.ca/announcements', {
+                xpath: '//div',
+                format: 'json',
+                callback: function(data){
+                    $("#announcements").empty(); 
+                    
+                    latestAnnouncement = data.query.results.div[0].div[2].div[2].div.div.div[0].div.div[0].div.div.div[1].div.p[0].strong.span.span[0].content; 
+                    
+                    $("#announcements").append("<p>"+ latestAnnouncement +"</p>"); 
+                }
+        });
         
         
         
