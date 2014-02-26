@@ -38,6 +38,11 @@
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 
     <!-- Plugins -->
+    <gap:plugin name="com.phonegap.plugins.facebookconnect">
+        <param name="APP_ID" value="1472493829633399" />
+        <param name="APP_NAME" value="IASYouth" />
+    </gap:plugin>
+
 
     <!-- Core plugins -->
     <gap:plugin name="org.apache.cordova.battery-status" />

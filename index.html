@@ -11,15 +11,8 @@
     <meta name="Keywords"  content="" />
 </head>
 <body>
-    <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1472493829633399";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-    
+   
+
     
 <div data-role="page" id="mainPage" data-theme="b">
     <div data-role="panel" id="contact" data-display="overlay"> 
@@ -38,7 +31,10 @@
       <a class="refresh" href="#" data-role="button" data-icon="refresh" data-iconpos="notext"></a>
   </div> 
     
-  <div data-role="content">
+  <div data-role="content"> 
+      <div id="fb-root"></div>
+    
+    <div class="fb-comments" data-href="http://iasforyouth.appspot.com/" data-numposts="5" data-colorscheme="light"></div>
       <p>"Allah says, 'I am as my servant expects Me to be, and I am with him when he remembers me. If he thinks of Me, I think of him. If he mentions Me in company, I mention him in an even better company. When he comes closer to Me by a handspan, I come closer to him an arm's length. If he draws closer to Me by an arm's length, I draw closer by a distance of two outstretched arms nearer to him. If my servant comes to Me walking, I go to him running." (Al-Bukhari)</p>
       <br>
       <a data-role="button" href="#prayerPage" data-transition="slide" >Prayer Timings</a>
@@ -130,7 +126,7 @@
   <div data-role="content">
       <p>"None of you will believe until you love for your brother what you love for yourself." [Bukhari & Muslim]</p>
       <br>
-      <div class="fb-comments" data-href="http://iasforyouth.appspot.com/" data-numposts="5" data-colorscheme="light"></div>
+      
       <br>
       <div data-role="collapsible" data-collapsed="false">
           <h1>General Events<span id="generalNum" class="ui-li-count ui-btn-up-c ui-btn-corner-all"></span></h1>
@@ -159,8 +155,15 @@
 <script type="text/javascript" src="http://jsdo.it/laphroaig/jquery.yql/js"></script>
 
 <script>
-    $(function(){
-        
+    $(document).ready(function(){
+         $.ajaxSetup({ cache: true });
+  $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+    FB.init({
+      appId: '1472493829633399',
+    });     
+    $('#loginbutton,#feedbutton').removeAttr('disabled');
+    FB.getLoginStatus(updateStatusCallback);
+  });
         loadData(); 
         
         $('.refresh').click(function() {
