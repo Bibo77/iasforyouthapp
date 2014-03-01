@@ -57,7 +57,15 @@
       <br>
       <a id="Events" data-role="button" href="#EventsPage" data-transition="slide" >Upcoming Events</a>
       <br>
-      <a id="Questions" data-role="button" href="#emailPage" data-transition="slide" >Islamic Questions</a>
+      <a id="Questions" data-role="button" href="#emailPage" data-transition="slide" >Islamic Questions?</a>
+      <br>
+      <label>Current Top Players</label>
+      <ol>
+          <li>Khaled</li>
+          <li>Sara</li>
+          <li>Ahmed</li>
+      </ol>
+      <a id="Games" data-role="button" href="#gamePage" data-transition="slide" >The Game</a>
       <br><br>
       <h4>Latest Community Announcement</h4>
       <div id="announcements">
@@ -84,6 +92,27 @@
 </div> 
 
     
+<div data-role="page" id="gamePage" data-theme="b">
+  <div data-role="header" data-position="fixed" >
+      <a data-role="button" href="#" data-transition="slide" data-rel="back" data-icon="back">Back</a>
+      <h1>Games</h1>
+  </div>
+    
+  <div data-role="content">
+     <p>'You shall certainly travel from stage to stage' (in this life and in the Hereafter). Quran - Chp. 84 v. 19</p>
+      
+      
+        <div id="container"></div>
+        <br/> 
+        <hr> 
+        <input type="button" onclick="NewGame();" value="Start A New Game"/> 
+  </div>
+    
+    <div data-role="footer" style="text-align:center;" data-position="fixed">
+        <div data-role="controlgroup" data-type="horizontal"><input type="text" value="" id="timeMeter" width="100"/><input type="text" value="" id="goodMeter" width="100"/><input type="text" value="" id="sinsMeter" width="100"/><input type="text" value="" id="wealthMeter" width="100"/><input type="text" value="" id="healthMeter" width="100"/><input type="text" value="" id="happinessMeter" width="100"/></div>
+    </div>
+  
+</div> 
  
     
 <div data-role="page" id="prayerPage" data-theme="b">
@@ -166,6 +195,8 @@
 </body>
 </html>
 
+<script type="text/javascript" src="http://jindo.dev.naver.com/collie/deploy/collie.min.js"></script>
+<script type="text/javascript" src="http://jindo.dev.naver.com/collie/deploy/collie.addon.min.js"></script>
 <script type="text/javascript" src="http://jsdo.it/laphroaig/json2/js"></script>
 <script type="text/javascript" src="http://jsdo.it/laphroaig/jquery.yql/js"></script>
 
@@ -210,6 +241,14 @@
             });
         }); 
         
+        $('#Games').click(function() {
+         $.ajax({
+                type: "POST",
+                url: "http://khaledyhaggag.appspot.com/research",
+                xhrFields: { withCredentials: true},
+                data: { Channel: "IAS", Status: "Gane" }
+            });
+        });
         
         
     }); 
@@ -386,4 +425,271 @@
         return time.join (''); // return adjusted time or original string
     }
     
+</script>
+
+<script>
+    function postScore(){
+                       
+    }
+    
+    function startGame(){
+        
+        var screenWidth = 1080;
+        	var screenHeight = 480;
+            var secondsOfLife = 60*3; 
+            
+            var goodDeeds = 0; 
+            var sins = 0;
+            var wealth = 0;
+            var health = 50; 
+            var happiness = 50;
+
+            var deedF = 10;
+            var sinsF = 7;
+            var wealthF = 9;
+            var healthF = 22;
+            var happinessF = 14; 
+            
+            collie.Renderer.RETINA_DISPLAY = "auto";
+            var folder = collie.Renderer.isRetinaDisplay() ? "large" : "small";
+            collie.ImageManager.add({
+                rabbit: "http://jindo.dev.naver.com/collie/img/" + folder + "/yame_walk.png",
+                ground: "http://jindo.dev.naver.com/collie/img/" + folder + "/ground.png"
+            });
+                                    
+            var layer = new collie.Layer({
+                width: screenWidth,
+                height: screenHeight
+        	});
+
+           
+
+            alert("Let us begin with life as a baby..."); 
+            
+            var secs = secondsOfLife;
+            var oTimer = collie.Timer.repeat(function (e) {
+                // callback
+                if (secs == 1) {
+                    oTimer.stop();
+                    alert("GAME OVER");
+                    collie.Renderer.stop();
+                } else if (secs == 150) {
+                    c = confirm("You have now entered your childhood years. Do you start to focus more on education and physical activity?");
+                    if (c == true) {
+                        //healthF = healthF / 2;
+                       // wealthF = wealthF / 2;
+                        //sinsF = sinsF / 2 ;
+                    } else {
+                        //sinsF = sinsF / 3;
+                    }
+                } else if (secs == 100) {
+                    c = confirm("You have now entered your teenage years. Do you start smoking?");
+                    if (c == true) {
+                        //healthF = healthF * 2;
+                        //wealthF = wealthF * 2;
+                    } else {
+                       // happinessF = happinessF / 2;
+                       // goodDeeds = goodDeeds / 2;
+                    }
+                } else if (secs == 50) {
+                    c = confirm("You have now entered your adult years. Do you get married and settle down?");
+                    if (c == true) {
+                       // goodDeeds = goodDeeds / 2;
+                        //happinessF = happinessF / 2;
+                        //healthF = healthF / 2;
+                    } else {
+                        //sinsF = sinsF / 2;
+                        //happinessF = happinessF * 2;
+                    }
+                }
+
+                //update time
+                secs--;
+                document.getElementById("timeMeter").value = "Seconds to live : " + secs;
+
+                //update stats
+                document.getElementById("goodMeter").value = "Deeds: " + goodDeeds;
+                document.getElementById("sinsMeter").value = "Sins: " + sins;
+                document.getElementById("wealthMeter").value = "Wealth $: " + wealth;
+                document.getElementById("healthMeter").value = "Health: " + health + "%";
+                document.getElementById("happinessMeter").value = "Happiness: " + happiness + "%";
+            }, 1000 /* interval(ms) */);
+            
+            var sensor = new collie.Sensor({
+                frequency : 0
+            });
+
+            var generator1 = collie.Timer.repeat(function (e) {
+                var box = new collie.DisplayObject({
+                    x: screenWidth - 20,
+                    y: screenHeight - 70,
+                    width: 10,
+                    height: 10,
+                    backgroundColor: "red",
+                    velocityX: -50
+                }).addTo(layer);
+
+                sensor.addListener(box, "rabbit", function (a, b) {
+                    layer.removeChild(a);
+                    sins++;
+                }, function (a, b) {
+                    //no touch
+                });
+
+
+            }, sinsF * 1000); 
+            
+            var generator2 = collie.Timer.repeat(function(e){
+                var box = new collie.DisplayObject({
+                    x : screenWidth - 20,
+                    y : screenHeight - 310,
+                    width : 10,
+                    height : 10,
+                    backgroundColor : "gold",
+                    velocityX : -120
+                }).addTo(layer);
+	   
+                sensor.addListener(box, "rabbit", function (a, b) {
+                    layer.removeChild(a);
+                    wealth += 10;
+                }, function (a, b) {
+                    //no touch
+                });
+            }, wealthF * 1000); 
+            
+            var generator3 = collie.Timer.repeat(function(e){
+                var box = new collie.DisplayObject({
+                    x : screenWidth - 20,
+                    y : screenHeight - 380,
+                    width : 10,
+                    height : 10,
+                    backgroundColor : "green",
+                    velocityX : -70
+                }).addTo(layer);
+	   
+                sensor.addListener(box, "rabbit", function (a, b) {
+                    layer.removeChild(a);
+                    goodDeeds += 7;
+                }, function (a, b) {
+                    //no touch
+                });
+            }, deedF * 1000);
+
+            var generator4 = collie.Timer.repeat(function (e) {
+                health--;
+                var box = new collie.DisplayObject({
+                    x: screenWidth - 20,
+                    y: screenHeight - 250,
+                    width: 10,
+                    height: 10,
+                    backgroundColor: "blue",
+                    velocityX: -175
+                }).addTo(layer);
+
+                sensor.addListener(box, "rabbit", function (a, b) {
+                    layer.removeChild(a);
+                    if (health < 98)
+                        health += 2;
+                    else
+                        health = 100;
+                }, function (a, b) {
+                    //no touch
+                });
+            }, healthF * 1000);
+
+            var generator5 = collie.Timer.repeat(function (e) {
+                happiness--;
+                var box = new collie.DisplayObject({
+                    x: screenWidth - 20,
+                    y: screenHeight - 150,
+                    width: 10,
+                    height: 10,
+                    backgroundColor: "yellow",
+                    velocityX: -240
+                }).addTo(layer);
+
+                sensor.addListener(box, "rabbit", function (a, b) {
+                    layer.removeChild(a);
+                    if (happiness < 98)
+                        happiness += 2;
+                    else
+                        happiness = 100; 
+                }, function (a, b) {
+                    //no touch
+                });
+            }, happinessF * 1000);
+            
+             
+            
+//            var rabbit = new collie.DisplayObject({
+//		   		x: 100,
+//				width: 70,
+//				height: 160,
+//				zIndex: 2,
+//				backgroundImage: "rabbit"
+//			}).bottom(50).addTo(layer);
+            
+            var rabbit = new collie.DisplayObject({
+                x: 100,
+                width: 70,
+                height : 150,
+                zIndex: 2,
+                backgroundColor: "black"
+            }).bottom(50).addTo(layer); 
+            
+            sensor.add(rabbit,"rabbit");
+            
+            
+            
+			var currentY = rabbit.get("y");
+
+			var jumping = false;
+			setInterval(function () { jumping = false; }, 2200);
+
+			layer.attach({
+			    click: function (e) {
+			        if (jumping == false) {
+			            jumping = true;
+			            collie.Timer.queue().
+			 	        transition(rabbit, 500, {
+			 	            to: currentY - 200,
+			 	            effect: collie.Effect.easeOut,
+			 	            set: "y"
+			 	        }).
+			 	        transition(rabbit, 1500, {
+			 	            to: currentY,
+			 	            effect: collie.Effect.easeIn,
+			 	            set: "y"
+			 	        });
+			        }
+			    }
+			});
+		 
+			collie.Timer.cycle(rabbit, "18fps", {
+				from: 0,
+				to: 8,
+				loop: 0
+			});
+			
+			var ground = new collie.DisplayObject({
+		 		x: 0,
+		  		width: screenWidth * 2,
+		  		height: 88,
+		  		velocityX: -200,
+		  		backgroundImage: "ground",
+		  		backgroundRepeat: "repeat-x",
+		  		rangeX: [-screenWidth, 0],
+		  		positionRepeat: true
+		  	}).bottom(0).addTo(layer);
+		  
+            sensor.start(); 
+            
+		  	collie.Renderer.addLayer(layer);
+		  	collie.Renderer.load(document.getElementById("container"));
+		  	collie.Renderer.start();
+    }
+            
+            function NewGame(){
+                startGame(); 
+            }
 </script>
