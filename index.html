@@ -54,11 +54,8 @@
       <p>"Allah says, 'I am as my servant expects Me to be, and I am with him when he remembers me. If he thinks of Me, I think of him. If he mentions Me in company, I mention him in an even better company. When he comes closer to Me by a handspan, I come closer to him an arm's length. If he draws closer to Me by an arm's length, I draw closer by a distance of two outstretched arms nearer to him. If my servant comes to Me walking, I go to him running." (Al-Bukhari)</p>
       <br>
       <a id="Prayers" data-role="button" href="#prayerPage" data-transition="slide" >Prayer Timings</a>
-      <br>
       <a id="Questions" data-role="button" href="#emailPage" data-transition="slide" >Islamic Questions?</a>
-      <br>
       <a id="Events" data-role="button" href="#EventsPage" data-transition="slide" >Upcoming Events</a>
-      <br>
       <a id="Games" data-role="button" href="#gamePage" data-transition="slide" >The Game</a>
       <label>Current Top Players</label>
       <ol id="scores">
@@ -91,18 +88,17 @@
 
     
 <div data-role="page" id="gamePage" data-theme="b">
-  <div data-role="header" data-position="fixed" >
+  <div data-role="header" >
       <a id="gameBack" data-role="button" href="#" data-transition="slide" data-rel="back" data-icon="back">Back</a>
       <h1>Games</h1>
-      <div ><input type="text" value="" id="timeMeter" /></div> 
   </div>
     
   <div data-role="content">
-     <p>'You shall certainly travel from stage to stage' (in this life and in the Hereafter). Quran - Chp. 84 v. 19</p>
+      <p>'You shall certainly travel from stage to stage' (in this life and in the Hereafter). Quran - Chp. 84 v. 19</p>
       <input type="button" id="startG" value="Start A New Game"/>
-      <br>
+      <p>Rules: Tap to jump, red blocks are sins, green blocks are good deeds. (Landscape mode is recommended).</p>
         <div id="container"></div>
-         
+        <input type="text" value="" id="timeMeter" />
   </div>
     
     
@@ -439,18 +435,18 @@
     //Everything with the game
     
     $(document).ready(function(){
-        
         $('#gameBack').click(function() {
            collie.Renderer.stop(); 
          });
     }); 
+    
+    
     function postScore(s){
          var c = confirm("You have a high score of: " + s + ". Would you like to post it?");
             if (c == true) {
                 var person = prompt("Please enter your name","Anonymous");
                 if (person!=null)
                 {
-                    alert('send'); 
                     $.ajax({
                         type: "POST",
                         url: "http://iasforyouth.appspot.com/topScores",
@@ -505,15 +501,15 @@
                         var box = new collie.DisplayObject({
                             x : screenWidth - 20,
                             y : 5,
-                            width : 10,
-                            height : 10,
+                            width : 5,
+                            height : 5,
                             backgroundColor : "green",
                             velocityX : -120
                         }).addTo(layer);
 	   
                         sensor.addListener(box, "rabbit", function (a, b) {
                             layer.removeChild(a);
-                            goodDeeds += 7;
+                            goodDeeds++;
                         }, function (a, b) {
                             //no touch
                             });
@@ -525,9 +521,9 @@
                         var generator5 = collie.Timer.repeat(function (e) {
                             var box = new collie.DisplayObject({
                                 x: screenWidth - 20,
-                                y: 210,
-                                width: 10,
-                                height: 10,
+                                y: 220,
+                                width: 5,
+                                height: 5,
                                 backgroundColor: "red",
                                 velocityX: -190
                             }).addTo(layer);
@@ -547,15 +543,15 @@
                         var box = new collie.DisplayObject({
                             x : screenWidth - 20,
                             y : 35,
-                            width : 10,
-                            height : 10,
+                            width : 5,
+                            height : 5,
                             backgroundColor : "green",
                             velocityX : -200
                         }).addTo(layer);
 	   
                         sensor.addListener(box, "rabbit", function (a, b) {
                             layer.removeChild(a);
-                            goodDeeds += 7;
+                            goodDeeds++;
                         }, function (a, b) {
                             //no touch
                             });
@@ -576,9 +572,9 @@
             var generator1 = collie.Timer.repeat(function (e) {
                 var box = new collie.DisplayObject({
                     x: screenWidth - 20,
-                    y: 230,
-                    width: 10,
-                    height: 10,
+                    y: 205,
+                    width: 5,
+                    height: 5,
                     backgroundColor: "red",
                     velocityX: -100
                 }).addTo(layer);
@@ -595,19 +591,19 @@
                 var box = new collie.DisplayObject({
                     x : screenWidth - 20,
                     y : 20,
-                    width : 10,
-                    height : 10,
+                    width : 5,
+                    height : 5,
                     backgroundColor : "green",
                     velocityX : -170
                 }).addTo(layer);
 	   
                 sensor.addListener(box, "rabbit", function (a, b) {
                     layer.removeChild(a);
-                    goodDeeds += 7;
+                    goodDeeds++;
                 }, function (a, b) {
                     //no touch
                 });
-            }, 6000);
+            }, 4000);
 
 //            var rabbit = new collie.DisplayObject({
 //		   		x: 100,
@@ -618,9 +614,9 @@
 //			}).bottom(50).addTo(layer);
             
             var rabbit = new collie.DisplayObject({
-                x: 75,
-                width: 70,
-                height : 150,
+                x: 15,
+                width: 25,
+                height : 100,
                 zIndex: 2,
                 backgroundColor: "black"
             }).bottom(10).addTo(layer); 
@@ -640,7 +636,7 @@
 			            jumping = true;
 			            collie.Timer.queue().
 			 	        transition(rabbit, 500, {
-			 	            to: currentY - 90,
+			 	            to: currentY - 135,
 			 	            effect: collie.Effect.easeOut,
 			 	            set: "y"
 			 	        }).
@@ -663,7 +659,7 @@
 		 		x: 0,
 		  		width: screenWidth * 2,
 		  		height: 88,
-		  		velocityX: -200,
+		  		velocityX: -50,
 		  		backgroundImage: "ground",
 		  		backgroundRepeat: "repeat-x",
 		  		rangeX: [-screenWidth, 0],
