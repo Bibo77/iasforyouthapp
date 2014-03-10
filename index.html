@@ -53,15 +53,12 @@
     
       <p>"Allah says, 'I am as my servant expects Me to be, and I am with him when he remembers me. If he thinks of Me, I think of him. If he mentions Me in company, I mention him in an even better company. When he comes closer to Me by a handspan, I come closer to him an arm's length. If he draws closer to Me by an arm's length, I draw closer by a distance of two outstretched arms nearer to him. If my servant comes to Me walking, I go to him running." (Al-Bukhari)</p>
       <br>
-      <a id="Prayers" data-role="button" href="#prayerPage" data-transition="slide" >Prayer Timings</a>
-      <a id="Questions" data-role="button" href="#emailPage" data-transition="slide" >Islamic Questions?</a>
-      <a id="Events" data-role="button" href="#EventsPage" data-transition="slide" >Upcoming Events</a>
-      <a id="Games" data-role="button" href="#gamePage" data-transition="slide" >The Game</a>
-      <label>Current Top Players</label>
-      <ol id="scores">
-          
-      </ol>
-      <br><br><hr>
+      <ul id="options">
+      <li id="Prayer" data-sortby=4><a  id="Prayers" data-role="button" href="#prayerPage" data-transition="slide" >Prayer Timings</a></li>
+      <li id="Question" data-sortby=4><a  id="Questions" data-role="button" href="#emailPage" data-transition="slide" >Islamic Questions?</a></li>
+      <li id="Event" data-sortby=4><a id="Events" data-role="button" href="#EventsPage" data-transition="slide" >Upcoming Events</a></li>
+      <li id="Game" data-sortby=4><a id="Games" data-role="button" href="#gamePage" data-transition="slide" >The Game</a></li>      </ul>
+      <br>
       <h4>Latest Community Announcement</h4>
       <div id="announcements">
           
@@ -95,6 +92,10 @@
     
   <div data-role="content">
       <p>'You shall certainly travel from stage to stage' (in this life and in the Hereafter). Quran - Chp. 84 v. 19</p>
+      <label>Current Top Players</label>
+      <ol id="scores">
+          
+      </ol>
       <input type="button" id="startG" value="Start A New Game"/>
       <p>Rules: Tap to jump, red blocks are sins, green blocks are good deeds. (Landscape mode is recommended).</p>
         <div id="container"></div>
@@ -199,6 +200,29 @@
        $yql = $("#yql");
         
         loadData(); 
+       
+        $.getJSON( "http://khaledyhaggag.appspot.com/research_order?callback=?", function( json ) { 
+            
+            
+            var i = 1;
+            json.forEach(function(od) {
+                $('#'+od.Status).attr('data-sortby',i);
+                i++; 
+            });
+            
+            var ul = $('#options'),
+            li = ul.children('li');
+    
+            li.detach().sort(function(a,b) {
+                return $(a).data('sortby') - $(b).data('sortby');  
+            });
+    
+            ul.append(li);
+        });
+        
+        
+        
+        
         
         $('.refresh').click(function() {
            loadData(); 
@@ -237,7 +261,7 @@
                 type: "POST",
                 url: "http://khaledyhaggag.appspot.com/research",
                 xhrFields: { withCredentials: true},
-                data: { Channel: "IAS", Status: "Gane" }
+                data: { Channel: "IAS", Status: "Game" }
             });
         });
         
@@ -256,88 +280,51 @@
             }
         });
         
-        var fajrEast = "NA";
-        var duhrEast = "NA";
-        var asrEast= "NA"; 
-        var maghribEast = "NA";
-        var ishaEast = "NA"; 
-        var jumma1East = "NA"; 
-        var jumma2East = "NA";
+        var fajrEast = "6:30am";
+        var duhrEast = "1:30pm";
+        var asrEast= "5:30pm"; 
+        var maghribEast = "Sunset";
+        var ishaEast = "8:30pm"; 
+        var jumma1East = "1:00pm"; 
+        var jumma2East = "2:15pm";
                     
                 
-        var fajrWest = "NA";
-        var duhrWest = "NA";
-        var asrWest = "NA";
-        var maghribWest = "NA";
-        var ishaWest = "NA";
-        var jumma1West = "NA";
-        var jumma2West = "NA";
+        var fajrWest = "6:45am";
+        var duhrWest = "1:45pm";
+        var asrWest = "5:15pm";
+        var maghribWest = "Sunset";
+        var ishaWest = "8:45pm";
+        var jumma1West = "1:40pm";
+        var jumma2West = "2:30pm";
         
         var duhrCampus = "NA";
         var asrCampus = "NA"; 
         
+        //duhrCampus = duhrEast;
+        //asrCampus = asrEast;
         
-    
-        $.yql.getHTML('http://www.imamilyas.com/index.html', {
-                xpath: '//div',
-                format: 'json',
-                callback: function(data){
-                    
-                    fajrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[0].td[1].p;
-                    duhrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[1].td[1].p;
-                    asrEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[2].td[1].p;
-                    maghribEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[3].td[1].p;
-                    ishaEast = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[4].td[1].p;
-                    jumma1East = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[5].td[1].p;
-                    jumma2East = data.query.results.div[4].div.div[11].div.div.div.div.div.table.tbody.tr[6].td[1].p;
-                    
-                    
-                    fajrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[0].td[1].p;
-                    duhrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[1].td[1].p;
-                    asrWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[2].td[1].p;
-                    maghribWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[3].td[1].p;
-                    ishaWest = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[4].td[1].p;
-                    jumma1West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[5].td[1].p;
-                    jumma2West = data.query.results.div[4].div.div[12].div.div.div.div.div.table.tbody.tr[6].td[1].p;
-                    
-                    //duhrCampus = duhrEast;
-                    //asrCampus = asrEast;
-                    
-                    $('#fajr').html("Fajr:  "+"<b>"+fajrEast +"</b>");
-                    $('#duhr').html("Duhr:  "+duhrEast);
-                    $('#asr').html("Asr:  "+asrEast);
-                    $('#maghrib').html("Maghrib:  "+maghribEast);
-                    $('#isha').html("Isha:  "+"<b>"+ishaEast+"</b>");
-                    $('#jumma1').html("Jumma 1:  "+jumma1East);
-                    $('#jumma2').html("Jumma 2:  "+jumma2East);
+        $('#fajr').html("Fajr:  "+"<b>"+fajrEast +"</b>");
+        $('#duhr').html("Duhr:  "+duhrEast);
+        $('#asr').html("Asr:  "+asrEast);
+        $('#maghrib').html("Maghrib:  "+maghribEast);
+        $('#isha').html("Isha:  "+"<b>"+ishaEast+"</b>");
+        $('#jumma1').html("Jumma 1:  "+jumma1East);
+        $('#jumma2').html("Jumma 2:  "+jumma2East);
+
+        $('#fajrWest').html("Fajr:  "+"<b>"+fajrWest+"</b>");
+        $('#duhrWest').html("Duhr:  "+duhrWest);
+        $('#asrWest').html("Asr:  "+asrWest);
+        $('#maghribWest').html("Maghrib:  "+maghribWest);
+        $('#ishaWest').html("Isha:  "+"<b>"+ishaWest+"</b>");
+        $('#jumma1West').html("Jumma 1:  "+jumma1West);
+        $('#jumma2West').html("Jumma 2:  "+jumma2West);
+        
+        //$('#duhrCampus').html("Duhr:  "+duhrCampus);
+        //$('#asrCampus').html("Asr:  "+asrCampus);
+        
+        var latestAnnouncement = "Annual General Meeting for 2014 will take place on March 9th after Duhr prayer (insha'ALLAH).";
             
-                    $('#fajrWest').html("Fajr:  "+"<b>"+fajrWest+"</b>");
-                    $('#duhrWest').html("Duhr:  "+duhrWest);
-                    $('#asrWest').html("Asr:  "+asrWest);
-                    $('#maghribWest').html("Maghrib:  "+maghribWest);
-                    $('#ishaWest').html("Isha:  "+"<b>"+ishaWest+"</b>");
-                    $('#jumma1West').html("Jumma 1:  "+jumma1West);
-                    $('#jumma2West').html("Jumma 2:  "+jumma2West);
-                    
-                    //$('#duhrCampus').html("Duhr:  "+duhrCampus);
-                    //$('#asrCampus').html("Asr:  "+asrCampus);
-                }
-        });
-        
-        var latestAnnouncement = "NA";
-        
-        $.yql.getHTML('http://www.islamiccenter.sk.ca/announcements', {
-                xpath: '//div',
-                format: 'json',
-                callback: function(data){
-                    $("#announcements").empty(); 
-                    
-                    latestAnnouncement = data.query.results.div[0].div[2].div[2].div.div.div[0].div.div[0].div.div.div[1].div.p[0].strong.span.span[0].content; 
-                    
-                    $("#announcements").append("<p>"+ latestAnnouncement +"</p>"); 
-                }
-        });
-        
+        $("#announcements").append("<p>"+ latestAnnouncement +"</p>"); 
         
         
             
@@ -461,7 +448,7 @@
     
     function startGame(){
         
-        var screenWidth = window.screen.width;
+        var screenWidth = 600;
         var screenHeight = 250;
         
         var secondsOfLife = 60*2; 
@@ -516,7 +503,7 @@
                         }, 5000);
                     }
                 } else if (secs == 70) {
-                    c = confirm("You have now entered your teenage years. Will you start smoking?");
+                    c = confirm("You have now entered your teenage years. Will you start doing drugs?");
                     if (c == true) {
                         var generator5 = collie.Timer.repeat(function (e) {
                             var box = new collie.DisplayObject({
@@ -534,7 +521,7 @@
                             }, function (a, b) {
                                 //no touch
                             });
-                        }, 6000); 
+                        }, 4000); 
                     }
                 } else if (secs == 40) {
                     c = confirm("You have now entered your adult years. Will you get married and have an islamic wedding?");
@@ -555,7 +542,7 @@
                         }, function (a, b) {
                             //no touch
                             });
-                        }, 3000);
+                        }, 2500);
                     }
                 }
 
