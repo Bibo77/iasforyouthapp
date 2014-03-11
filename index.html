@@ -232,7 +232,7 @@
         $('#Prayers').click(function() {
          $.ajax({
                 type: "POST",
-                url: "http://khaledyhaggag.appspot.com/research",
+                url: "http://khaledyhaggag.appspot.com/research?callback=?",
                 xhrFields: { withCredentials: true},
                 data: { Channel: "IAS", Status: "Prayer" }
             });
@@ -429,7 +429,17 @@
     
     
     function postScore(s){
-        
+        alert('test'); 
+        var person = prompt("Enter your name to post your high score of: " + s + ".","Anonymous");
+        if (person!=null)
+        {
+            $.ajax({
+                type: "POST",
+                url: "http://iasforyouth.appspot.com/topScores",
+                xhrFields: { withCredentials: true},
+                data: { Name: person, Score: s }
+            });
+        }
             
     }
     
@@ -468,18 +478,8 @@
                 if (secs == 1) {
                     oTimer.stop();
                     alert("GAME OVER. As you pass to the next stage you carry with you " + goodDeeds + " good deeds, but also " + sins + " sins.");
+                    postScore(goodDeeds - sins); 
                     collie.Renderer.stop();
-                    alert('test'); 
-        var person = prompt("Enter your name to post your high score of: " + goodDeeds - sins + ".","Anonymous");
-        if (person!=null)
-        {
-            $.ajax({
-                type: "POST",
-                url: "http://iasforyouth.appspot.com/topScores",
-                xhrFields: { withCredentials: true},
-                data: { Name: person, Score: s }
-            });
-        }
                 } else if (secs == 100) {
                     c = confirm("You have now entered your childhood years. Will you focus more on education and physical activity?");
                     if (c == true) {
