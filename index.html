@@ -88,6 +88,7 @@
   <div data-role="header" >
       <a id="gameBack" data-role="button" href="#" data-transition="slide" data-rel="back" data-icon="back">Back</a>
       <h1>Games</h1>
+       <a class="refresh" href="#" data-role="button" data-icon="refresh" data-iconpos="notext"></a>
   </div>
     
   <div data-role="content">
@@ -232,16 +233,16 @@
         $('#Prayers').click(function() {
          $.ajax({
                 type: "POST",
-                url: "http://khaledyhaggag.appspot.com/research?callback=?",
+                url: "http://khaledyhaggag.appspot.com/research",
                 xhrFields: { withCredentials: true},
-                data: { Channel: "IAS", Status: "Prayer" }
+                data: { Channel: 'IAS', Status: 'Prayer'}
             });
         });
         
         $('#Events').click(function() {
             $.ajax({
                 type: "POST",
-                url: "http://khaledyhaggag.appspot.com/research",
+                url: "http://khaledyhaggag.appspot.com/research?callback=?",
                 xhrFields: { withCredentials: true},
                 data: { Channel: "IAS", Status: "Event" }
             });
@@ -429,7 +430,6 @@
     
     
     function postScore(s){
-        alert('test'); 
         var person = prompt("Enter your name to post your high score of: " + s + ".","Anonymous");
         if (person!=null)
         {
@@ -439,8 +439,7 @@
                 xhrFields: { withCredentials: true},
                 data: { Name: person, Score: s }
             });
-        }
-            
+        }       
     }
     
     
