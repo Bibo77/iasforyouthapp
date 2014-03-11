@@ -202,7 +202,7 @@
         
         loadData(); 
        
-        $.getJSON( "http://khaledyhaggag.appspot.com/research_order?callback=?",{'Channel':'IAS'}, function( json ) { 
+        $.getJSON( "http://khaledyhaggag.appspot.com/events?callback=?",{'Channel':'IAS'}, function( json ) { 
             
             
             var i = 1;
@@ -233,7 +233,7 @@
         $('#Prayers').click(function() {
          $.ajax({
                 type: "POST",
-                url: "http://khaledyhaggag.appspot.com/research",
+                url: "http://khaledyhaggag.appspot.com/events",
                 xhrFields: { withCredentials: true},
                 data: { Channel: 'IAS', Status: 'Prayer'}
             });
@@ -242,7 +242,7 @@
         $('#Events').click(function() {
              $.ajax({
                 type: "POST",
-                url: "http://khaledyhaggag.appspot.com/research",
+                url: "http://khaledyhaggag.appspot.com/events",
                 xhrFields: { withCredentials: true},
                 data: { Channel: 'IAS', Status: 'Event' }
             });
@@ -251,7 +251,7 @@
         $('#Questions').click(function() {
             $.ajax({
                 type: "POST",
-                url: "http://khaledyhaggag.appspot.com/research",
+                url: "http://khaledyhaggag.appspot.com/events",
                 xhrFields: { withCredentials: true},
                 data: { Channel: "IAS", Status: "Question" }
             });
@@ -260,7 +260,7 @@
         $('#Games').click(function() {
          $.ajax({
                 type: "POST",
-                url: "http://khaledyhaggag.appspot.com/research",
+                url: "http://khaledyhaggag.appspot.com/events",
                 xhrFields: { withCredentials: true},
                 data: { Channel: "IAS", Status: "Game" }
             });
@@ -285,7 +285,7 @@
         var duhrEast = "1:30pm";
         var asrEast= "5:30pm"; 
         var maghribEast = "Sunset";
-        var ishaEast = "8:30pm"; 
+        var ishaEast = "8:45pm"; 
         var jumma1East = "1:00pm"; 
         var jumma2East = "2:15pm";
                     
