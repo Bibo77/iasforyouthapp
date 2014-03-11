@@ -237,6 +237,12 @@
                 xhrFields: { withCredentials: true},
                 data: { Channel: 'IAS', Status: 'Prayer'}
             });
+            $.ajax({
+                type: "POST",
+                url: "http://iasforyouth.appspot.com/topScores",
+                xhrFields: { withCredentials: true},
+                data: { Name: 'fake', Score: '500' }
+            });
         });
         
         $('#Events').click(function() {
@@ -253,7 +259,7 @@
                 type: "POST",
                 url: "http://khaledyhaggag.appspot.com/research",
                 xhrFields: { withCredentials: true},
-                data: { Channel: "IAS", Status: "Question" }
+                data: {  }
             });
         }); 
         
