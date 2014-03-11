@@ -427,25 +427,20 @@
          });
     }); 
     
-    prompt('test','sdf'); 
-    prompt('asdfsdf'); 
+    
     function postScore(s){
-         var c = confirm("You have a high score of: " + s + ". Would you like to post it?");
-            if (c == true) {
-                var person = prompt("Please enter your name","Anonymous");
-                if (person!=null)
-                {
-                    $.ajax({
-                        type: "POST",
-                        url: "http://iasforyouth.appspot.com/topScores",
-                        xhrFields: { withCredentials: true},
-                        data: { Name: person, Score: s }
-                    });
-                }
-            }
-            else {
-             alert('Your high score has not been posted.');    
-            }
+        
+        var person = prompt("Enter your name to post your high score of: " + s + ".","Anonymous");
+        if (person!=null)
+        {
+            $.ajax({
+                type: "POST",
+                url: "http://iasforyouth.appspot.com/topScores",
+                xhrFields: { withCredentials: true},
+                data: { Name: person, Score: s }
+            });
+        }
+            
     }
     
     
