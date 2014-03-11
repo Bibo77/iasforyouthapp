@@ -429,17 +429,7 @@
     
     
     function postScore(s){
-        prompt("Enter your name to post your high score of: " + s + ".","Anonymous");
-        var person = prompt("Enter your name to post your high score of: " + s + ".","Anonymous");
-        if (person!=null)
-        {
-            $.ajax({
-                type: "POST",
-                url: "http://iasforyouth.appspot.com/topScores",
-                xhrFields: { withCredentials: true},
-                data: { Name: person, Score: s }
-            });
-        }
+        
             
     }
     
@@ -479,7 +469,17 @@
                     oTimer.stop();
                     alert("GAME OVER. As you pass to the next stage you carry with you " + goodDeeds + " good deeds, but also " + sins + " sins.");
                     collie.Renderer.stop();
-                    postScore(goodDeeds - sins); 
+                    alert('test'); 
+        var person = prompt("Enter your name to post your high score of: " + goodDeeds - sins + ".","Anonymous");
+        if (person!=null)
+        {
+            $.ajax({
+                type: "POST",
+                url: "http://iasforyouth.appspot.com/topScores",
+                xhrFields: { withCredentials: true},
+                data: { Name: person, Score: s }
+            });
+        }
                 } else if (secs == 100) {
                     c = confirm("You have now entered your childhood years. Will you focus more on education and physical activity?");
                     if (c == true) {
@@ -520,7 +520,7 @@
                             }, function (a, b) {
                                 //no touch
                             });
-                        }, 4000); 
+                        }, 3000); 
                     }
                 } else if (secs == 40) {
                     c = confirm("You have now entered your adult years. Will you get married and have an islamic wedding?");
@@ -614,7 +614,7 @@
 			var currentY = rabbit.get("y");
 
 			var jumping = false;
-			setInterval(function () { jumping = false; }, 2550);
+			setInterval(function () { jumping = false; }, 2700);
 
 			layer.attach({
 			    click: function (e) {
