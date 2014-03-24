@@ -195,6 +195,10 @@
 
 <script>
     var $yql;
+    function alertDismissed() {
+    // do something
+        
+    }
     
     $(document).ready(function(){
        $yql = $("#yql");
@@ -225,7 +229,13 @@
         
         
         $('.refresh').click(function() {
-           loadData(); 
+           loadData();
+             navigator.notification.alert(
+                        'Your internet connection is not stable, this application may not function properly.',  // message
+                        alertDismissed,         // callback
+                        'Alert',            // title
+                        'Ok'                  // buttonName
+                    );
             alert("New Data Loaded"); 
          });
         
@@ -268,25 +278,9 @@
         
     }); 
     
-    function alertDismissed() {
-    // do something
-        
-    }
+    
     
     function loadData(){
-        //first check if there is an internet connection
-        $.ajaxSetup({
-            timeout: 3000, // Microseconds, for the laughs.  Guaranteed timeout.
-            error: function(request, status, maybe_an_exception_object) {
-                if(status == 'timeout')
-                    navigator.notification.alert(
-                        'Your internet connection is not stable, this application may not function properly.',  // message
-                        alertDismissed,         // callback
-                        'Alert',            // title
-                        'Ok'                  // buttonName
-                    );
-            }
-        });
         
         var fajrEast = "6:30am";
         var duhrEast = "1:30pm";
@@ -331,7 +325,7 @@
         //$('#asrCampus').html("Asr:  "+asrCampus);
         
         var latestAnnouncement = "Annual General Meeting for 2014 will take place on March 9th after Duhr prayer (insha'ALLAH).";
-            
+        $("#announcements").empty(); 
         $("#announcements").append("<p>"+ latestAnnouncement +"</p>"); 
         
         
