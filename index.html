@@ -193,12 +193,28 @@
 <script type="text/javascript" src="http://jsdo.it/laphroaig/json2/js"></script>
 <script type="text/javascript" src="http://jsdo.it/laphroaig/jquery.yql/js"></script>
 
-<script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script type="text/javascript" charset="utf-8">
     var $yql;
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        // Empty
+        document.getElementById('tb1').value = 'device ready';
+    }
     function alertDismissed() {
     // do something
         
     }
+   
+    navigator.notification.alert(
+                        'Your internet connection is not stable, this application may not function properly.',  // message
+                        alertDismissed,         // callback
+                        'Alert',            // title
+                        'Ok'                  // buttonName
+                    );
     
     $(document).ready(function(){
        $yql = $("#yql");
@@ -230,12 +246,7 @@
         
         $('.refresh').click(function() {
            loadData();
-             navigator.notification.alert(
-                        'Your internet connection is not stable, this application may not function properly.',  // message
-                        alertDismissed,         // callback
-                        'Alert',            // title
-                        'Ok'                  // buttonName
-                    );
+             
             alert("New Data Loaded"); 
          });
         
