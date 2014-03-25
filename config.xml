@@ -6,14 +6,14 @@
         id        = "com.phonegap.ias-app"
         version   = "1.0.0">
 
-    <name>IAS APP</name>
+    <name>898 Exampls</name>
 
     <description>
-        An APP for the Islamic Assocation of Sasktachewan (Youth). It includes prayer timings at the east and west masjid, as well as upcoming youth events.
+        sadfsdf
     </description>
 
-    <author href="" email="iasyouthm@gmail.com">
-        IAS Youth Brothers
+    <author href="" email="khaled.haggag@usask.ca">
+        khaled
     </author>
 
     <!--
@@ -71,8 +71,7 @@
     -->
 
     <!-- Define app icon for each platform. -->
-    <icon src="logo.png" />
-   <!-- 
+       <!-- 
     <icon src="res/icon/android/icon-36-ldpi.png"   gap:platform="android"    gap:density="ldpi" />
     <icon src="res/icon/android/icon-48-mdpi.png"   gap:platform="android"    gap:density="mdpi" />
     <icon src="res/icon/android/icon-72-hdpi.png"   gap:platform="android"    gap:density="hdpi" />
@@ -81,10 +80,6 @@
     <icon src="res/icon/blackberry/icon-80.png"     gap:platform="blackberry" gap:state="hover"/>
     -->
    
-    <icon src="res/icon/ios/icon-57.png"            gap:platform="ios"        width="57" height="57" />
-    <icon src="res/icon/ios/icon-72.png"            gap:platform="ios"        width="72" height="72" />
-    <icon src="res/icon/ios/icon-57-2x.png"         gap:platform="ios"        width="114" height="114" />
-    <icon src="res/icon/ios/icon-72-2x.png"         gap:platform="ios"        width="144" height="144" />
    
    <!--
     <icon src="res/icon/webos/icon-64.png"          gap:platform="webos" />
@@ -93,16 +88,6 @@
     -->
 
     <!-- Define app splash screen for each platform. -->
-    <gap:splash src="splash_S4.png"  gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="splash_S4.png"  gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="splash_S4.png"  gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="splash_S4.png"  gap:platform="android" gap:density="xhdpi" />
-    <gap:splash src="splash_S4.png"  gap:platform="blackberry" />
-    <gap:splash src="splash_ios1.png"  gap:platform="ios"     width="320" height="480" />
-    <gap:splash src="splash_ios2.png"  gap:platform="ios"     width="640" height="960" />
-    <gap:splash src="splash_ios3.png"  gap:platform="ios"     width="768" height="1024" />
-    <gap:splash src="splash_ios4.png"  gap:platform="ios"     width="1024" height="768" />
-    <gap:splash src="splash_S4.png"  gap:platform="winphone" />
 
     <!--
         Define access to external domains.
